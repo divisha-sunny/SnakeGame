@@ -2,23 +2,58 @@ package com.SnakeGame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+        final int BOARD_WIDTH = 20;
+        final int BOARD_HEIGHT = 10;
+        final int START_X = BOARD_WIDTH / 2;
+        final int START_Y = BOARD_HEIGHT / 2;
 
-        // Snake can move in a given direction and when it eats thr food, the length of snake increases.
-        // When snake crosses itself, the game will over.
-        //Food will be generated at a given interval
-        JFrame obj = new JFrame();// This is the window in which our game runs
-        Gameplay gameplay = new Gameplay();
 
-        obj.setBounds(10, 10, 905, 700);
-        obj.setBackground(Color.DARK_GRAY);
-        obj.setResizable(false);
-        obj.setVisible(true);
-        obj.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        obj.add(gameplay);
-	    }
+        Board board = new Board(BOARD_WIDTH, BOARD_HEIGHT);
+        board.initBoard();
+
+        RoomWall wall = new RoomWall('^');
+        wall.addRoomWallRow(board, wall, 0);
+        wall.addRoomWallRow(board, wall, board.getBoardHeight() - 1);
+        wall.addRoomWallColumn(board, wall, 0);
+        wall.addRoomWallColumn(board, wall, board.getBoardWidth() - 1);
+
+        SnakeElement snake = new SnakeElement('~', START_X, START_Y);
+        board.setObjectLocation(snake, snake.getX(), snake.getY());
+
+        AppleElement apple = new AppleElement('&');
+        apple.addRandomApple(board, apple);
+
+
+        Scanner scanner = new Scanner(System.in);
+        char input;
+
+
+        boolean isRunning = true;
+
+        while (isRunning) {
+            board.printBoard();
+            switch (input = scanner.nextLine().charAt(0)) {
+                case 'l':
+                    snake.moveLeft(board, snake);
+                    break;
+                case 'r':
+                    snake.moveRight(board, snake);
+                    break;
+                case 'u':
+                    snake.moveUp(board, snake);
+                    break;
+                case 'd':
+                    snake.moveDown(board, snake);
+                    break;
+            }
+        }
+    }
+
 }
+
 

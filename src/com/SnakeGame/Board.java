@@ -37,4 +37,10 @@ public class Board {
     public int getBoardHeight(){
         return this.height;
     }
+    public char getObjectLocation(int x, int y){
+        return this.boardMatrix[y][x];
+    }
+    public void setObjectLocation(BoardComponent object, int x, int y){
+        this.boardMatrix[y][x] = object.getIcon();
+    }
 }

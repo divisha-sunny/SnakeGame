@@ -3,7 +3,7 @@ package com.SnakeGame;
 public class BoardComponent {
 // This class has location coordinates x,y and icon representing the component
     private int x, y;
-    private char icon;
+    private char icon;// Icon can be a snake, apple or dot
 
     public int getX(){
         return this.x;
@@ -23,4 +23,5 @@ public class BoardComponent {
     public void setIcon(char newSymbol){
         this.icon = newSymbol;
     }
+
 }
